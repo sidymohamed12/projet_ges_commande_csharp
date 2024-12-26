@@ -1,0 +1,66 @@
+@model ges_commande.Models.User
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Login</title>
+
+        <link rel="stylesheet" href="~/css/form.css" />
+    </head>
+
+    <body>
+    @* <form asp-controller="Securite" asp-action="Login" method="post">
+            <input type="text" placeholder="mail" asp-for="Login">
+            <input type="password" asp-for="Password">
+            <button type="submit">feeeuuu</button> *@
+
+    @* @if (ViewData["ValidateMessage"] != null)
+        {
+                <label>@ViewData["ValidateMessage"]</label>
+        }
+        </form> *@
+
+        <div class="wrapper">
+            <div class="card-switch">
+                <label class="switch">
+                    <input type="checkbox" class="toggle">
+                    <span class="slider"></span>
+                    <span class="card-side"></span>
+                    <div class="flip-card__inner">
+                        <div class="flip-card__front">
+                            <div class="title">Log in</div>
+                            <form class="flip-card__form" asp-controller="Securite" asp-action="Login" method="post">
+                                <input class="flip-card__input" type="text" asp-for="Login"
+                                    placeholder="Email">
+                                <input class="flip-card__input" asp-for="Password"
+                                    placeholder="Password" type="password">
+                            @if (ViewData["ValidateMessage"] != null)
+                            {
+                                    <span class="text-red-600">@ViewData["ValidateMessage"]</span>
+                            }
+                                <button type="submit" class="flip-card__btn">Let`s go!</button>
+                            </form>
+                        </div>
+                        <div class="flip-card__back">
+                            <div class="title">Sign up</div>
+                            <form class="flip-card__form" action="">
+                                <input class="flip-card__input" placeholder="Name" type="name">
+                                <input class="flip-card__input" name="email" placeholder="Email" type="email">
+                                <input class="flip-card__input" name="password" placeholder="Password" type="password">
+                                <button class="flip-card__btn">Confirm!</button>
+                            </form>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </body>
+
+</html>

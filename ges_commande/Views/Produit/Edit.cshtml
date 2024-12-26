@@ -1,0 +1,68 @@
+@model ges_commande.Models.Produit
+
+@{
+}
+
+
+<body style="background-image: url(/image/bg.png); background-size: cover;">
+
+    <div class="flex justify-center items-center mt-14 my-5">
+
+        <div class="flex m-auto mt-8">
+
+            <div class="w-1/3 p-4 bg-gray-600 flex items-center">
+                <img src="@Model.Image" alt="Image" class="w-80 h-80 rounded shadow-lg" />
+            </div>
+
+
+            <div class="bg-white px-6 py-5 w-2/3 box-shadow3">
+                <h1 class="text-center text-gray-600 text-3xl mb-8 font-bold underline">Mise à Jour</h1>
+                <form asp-action="Edit" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-red-600"></div>
+                    <div class="w-full flex gap-3 mx-auto justify-center px-8">
+                        <div class="w-full">
+                            <label asp-for="Libelle" class="text-gray-600 font-semibold"></label>
+                            <input asp-for="Libelle"
+                                class="capitalize mt-1 shadow-2xl p-3 w-full outline-none focus:border-solid focus:border-[1px] border-[#035ec5] placeholder:text-black"
+                                type="text" placeholder="Libelle" />
+                            <span asp-validation-for="Libelle" class="text-red-600"></span>
+                        </div>
+
+                        <div class="w-full">
+                            <label asp-for="PrixUnit" class="text-gray-600 font-semibold"></label>
+                            <input asp-for="PrixUnit"
+                                class="capitalize mt-1 shadow-2xl p-3 glass w-full placeholder:text-black outline-none focus:border-solid focus:border-[1px] border-[#035ec5]"
+                                type="number" step="0.01" placeholder="Prix Unitaire" />
+                            <span asp-validation-for="PrixUnit" class="text-red-600"></span>
+                        </div>
+                    </div>
+                    <div class="w-full flex gap-3 mt-6 justify-center px-8">
+                        <div class="w-full">
+                            <label asp-for="QteSock" class="text-gray-600 font-semibold"></label>
+                            <input asp-for="QteSock"
+                                class="capitalize mt-1 shadow-2xl p-3 w-full outline-none focus:border-solid focus:border-[1px] border-[#035ec5] placeholder:text-black"
+                                type="number" placeholder="Quantité en Stock" />
+                            <span asp-validation-for="QteSock" class="text-red-600"></span>
+                        </div>
+
+                        <div class="w-full">
+                            <label asp-for="QteSeuil" class="text-gray-600 font-semibold"></label>
+                            <input asp-for="QteSeuil"
+                                class="p-3 capitalize mt-1 shadow-2xl glass w-full placeholder:text-black outline-none focus:border-solid focus:border-[1px] border-[#035ec5]"
+                                type="number" placeholder="Quantité de Seuil" />
+                            <span asp-validation-for="QteSeuil" class="text-red-600"></span>
+                        </div>
+
+                    </div>
+
+                    <input asp-for="Image" hidden type="text">
+
+                    <button type="submit"
+                        class="bg-blue-600 flex justify-center align-middle mx-auto text-white font-medium text-xl rounded py-4 text-center mt-8 w-1/2">Modifier</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>

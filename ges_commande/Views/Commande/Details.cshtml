@@ -1,0 +1,260 @@
+@model ges_commande.Models.Commande
+
+@{
+}
+
+<link rel="stylesheet" href="~/css/payement.css" asp-append-version="true" />
+
+<div class="p-4 sm:p-6 md:p-8 my-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+        <!-- Carte Total des Dettes -->
+        <div
+            class="rounded-xl text-white font-semibold text-lg sm:text-xl md:text-2xl flex flex-col justify-between bg-gray-900">
+            <div class="flex flex-col justify-center">
+                <div class="flex flex-row justify-center align-middle bg-white rounded-t-xl">
+                    <h1 class="mb-3 mt-2 text-2xl underline text-gray-900 font-bold">Infos Client</h1>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="ml-3 mb-3 mt-4">
+                        <path d="M14 2v4a2 2 0 0 0 2 2h4" />
+                        <path d="M15 18a3 3 0 1 0-6 0" />
+                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z" />
+    using ges_commande.Models.Enum;
+                        <circle cx="12" cy="13" r="2" />
+                    </svg>
+                </div>
+                <div class="flex flex-row m-auto mt-3 mb-3 items-center justify-center">
+                    <img src="https://i.pinimg.com/enabled_lo/564x/7c/bb/5c/7cbb5c5ac31d7b981bb303ad30bc6992.jpg"
+                        alt="User Photo" class="w-32 h-32 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full mr-8" />
+                    <div class="text-left flex flex-col justify-center">
+                        <p class="mb-3">Prenom : @Model.Client.User.Prenom </p>
+                        <p class="mb-3">Nom : @Model.Client.User.Nom</p>
+                        <p class="mb-3">Adresse : @Model.Client.Adresse</p>
+                        <p class="mb-3">Telephone : @Model.Client.User.Telephone</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carte Demandes en Cours -->
+        <div
+            class="rounded-xl font-semibold text-center text-white text-lg sm:text-xl md:text-3xl flex flex-col justify-between bg-gray-900">
+            <div class="flex flex-row justify-center align-middle bg-white rounded-t-xl">
+                <h1 class="mb-3 mt-2 text-2xl underline text-gray-900 font-bold">Infos Commandes</h1>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="ml-3 mb-3 mt-3">
+                    <path d="M11 15h2a2 2 0 1 0 0-4h-3c-.6 0-1.1.2-1.4.6L3 17" />
+                    <path
+                        d="m7 21 1.6-1.4c.3-.4.8-.6 1.4-.6h4c1.1 0 2.1-.4 2.8-1.2l4.6-4.4a2 2 0 0 0-2.75-2.91l-4.2 3.9" />
+                    <path d="m2 16 6 6" />
+                    <circle cx="16" cy="9" r="2.9" />
+                    <circle cx="6" cy="5" r="3" />
+                </svg>
+            </div>
+            <div class="flex flex-col mb-3 items-center">
+                <p class="mb-3">Date : @Model.Date</p>
+                <p class="mb-3">Montant Total : <span class="text-green-400">@Model.Montant fcfa</span></p>
+                <p class="mb-3 @(!Model.IsLivrer ? "text-red-600" : "text-green-400")">
+                    <span class="text-white">Livreur :</span> @(!Model.IsLivrer ? "Pas de livreur" : "Prêt à la livraison")
+                </p>
+                <p class="mb-3 @(Model.IsPayer ? "text-green-400" : "text-red-600")">
+                    <span class="text-white">Etat Payement :</span> @(Model.IsPayer ? "Payé !" : "Non Payé")
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <h1 class="font-bold text-5xl text-center mt-8 underline">Produits De La Commande</h1>
+    <div class="grid grid-cols-4 gap-4 justify-center mt-4">
+        @foreach (var item in ViewBag.Produits)
+        {
+            <div class="mt-4 flex justify-center">
+                <div
+                    class="w-80 py-6 bg-gray-900 text-neutral-300 px-4 flex flex-col items-start justify-center gap-3 transition-shadow rounded-lg">
+                    <div class="m-auto text-center w-full">
+                        <p class="font-semibold text-white text-2xl">@(item.Produit.Libelle)</p>
+                    </div>
+                    <div class="w-72 h-40 rounded-2xl">
+                        <img class="h-auto max-w-full rounded-lg" src="@item.Produit.Image" alt="">
+                    </div>
+                    <div class=" flex row justify-between text-white items-center w-full text-center">
+                        <p class="font-bold text-2xl ">@(item.Montant) Fcfa</p>
+                        <p class=" font-semibold text-xl"><u>qte</u> : @(item.QteCommande)</p>
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+
+
+    @if (User.IsInRole("Client") && Model.IsLivrer && !Model.IsPayer)
+    {
+        
+        <!-- Modal toggle -->
+        <button data-modal-target="static-modal" data-modal-toggle="static-modal"
+            class="block text-white text-center text-xl px-8 py-4 mt-8 mx-auto w-1/4 bg-green-500 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg"
+            type="button">
+            Enregistrer Payement
+        </button>
+
+        <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden mx-auto fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full mx-auto max-w-2xl max-h-full">
+                <!-- Modal content -->
+                <form asp-controller="Payement" asp-action="Create" method="post"
+                    class="relative bg-white rounded-lg shadow mx-auto" style="width: 60%;">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t bg-gray-900">
+                        <h3 class="text-xl font-semibold text-white ">
+                            Enregistrement Payement
+                        </h3>
+                        <button type="button"
+                            class="bg-gray-200 text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
+                            data-modal-hide="static-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-4 md:p-5 space-y-4">
+
+                        <div class="radio-inputs">
+                            <label>
+                                <input class="radio-input" type="radio" name="typePayement" value="2">
+                                <span class="radio-tile">
+                                    <span class="radio-icon">
+                                        <img src="/image/payementType/cheque.png" alt="Cheque" class="w-12 h-12">
+                                    </span>
+                                    <span class="radio-label">Chèque</span>
+                                </span>
+                            </label>
+                            <label>
+                                <input checked="" class="radio-input" type="radio" name="typePayement" value="1">
+                                <span class="radio-tile">
+                                    <span class="radio-icon">
+                                        <img src="/image/payementType/om.png" alt="Orange Money" class="w-12 h-12 mt-1">
+                                    </span>
+                                    <span class="radio-label">OM</span>
+                                </span>
+                            </label>
+                            <label>
+                                <input class="radio-input" type="radio" name="typePayement" value="0">
+                                <span class="radio-tile">
+                                    <span class="radio-icon">
+                                        <img src="/image/payementType/wave.png" alt="Wave" class="w-12 h-12 mt-1">
+                                    </span>
+                                    <span class="radio-label">Wave</span>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="w-full px-8 mx-auto">
+                            <input name="RefPayement"
+                                class="capitalize mt-1 rounded-lg shadow-2xl p-3 glass w-full placeholder:text-black outline-none focus:border-solid focus:border-[1px] "
+                                type="text" step="0.01" placeholder="Référence Payement" />
+                        </div>
+                        <input type="hidden" name="commandeId" value="@Model.Id">
+
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center justify-center mx-auto p-4 md:p-5 border-t border-gray-200 rounded-b ">
+                        <button data-modal-hide="static-modal" type="submit"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Valider</button>
+                        <button data-modal-hide="static-modal" type="reset"
+                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400  dark:hover:text-white dark:hover:bg-gray-700">Decline</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+    @* ---popup--- *@
+
+
+    @if (User.IsInRole("RS") && !Model.IsLivrer && Model.Etat== ges_commande.Models.Enum.EtatCommande.ACCEPTER)
+    {
+        <!-- Modal toggle -->
+        <button data-modal-target="static-modal" data-modal-toggle="static-modal"
+            class="block text-white text-center text-xl px-8 py-4 mt-8 mx-auto w-1/4 bg-green-500 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg"
+            type="button">
+            Transférer La Commande
+        </button>
+
+        <!-- Main modal -->
+        <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+            class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-2xl max-h-full">
+                <!-- Modal content -->
+                <form asp-controller="Livraison" asp-action="Create" method="post"
+                    class="relative bg-white rounded-lg shadow ">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t bg-gray-900">
+                        <h3 class="text-xl font-semibold text-white ">
+                            Planification Livraison
+                        </h3>
+                        <button type="button"
+                            class=" bg-gray-200 :text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center "
+                            data-modal-hide="static-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-4 md:p-5 space-y-4">
+                        <div class="px-8">
+                            <select
+                                class="bg-gray-50 border border-slate-800 text-slate-800 text-sm font-medium rounded-lg w-full p-2.5"
+                                name="LivreurId" class="form-control">
+
+                                @foreach (var item in ViewBag.Livreurs)
+                                {
+                                    <option value="@item.Id">@item.Prenom - @item.Nom</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="w-full flex gap-3 mx-auto justify-center px-8">
+                            <div class="w-full">
+                                <input name="DateLivraison" required
+                                    class="capitalize mt-1 rounded-lg shadow-2xl p-3 w-full outline-none focus:border-solid focus:border-[1px] "
+                                    type="date" />
+                            </div>
+
+                            <div class="w-full">
+                                <input name="AdresseLivraison"
+                                    class="capitalize mt-1 rounded-lg shadow-2xl p-3 glass w-full placeholder:text-black outline-none focus:border-solid focus:border-[1px] "
+                                    type="text" step="0.01" placeholder="Adresse Livraison" />
+                            </div>
+                        </div>
+                        <input type="hidden" name="commandeId" value="@Model.Id">
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="flex items-center justify-center mx-auto p-4 md:p-5 border-t border-gray-200 rounded-b ">
+                        <button data-modal-hide="static-modal" type="submit"
+                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Valider</button>
+                        <button data-modal-hide="static-modal" type="reset"
+                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+
+    @* ---- *@
+</div>
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,117 @@
+@model ges_commande.Models.Produit
+
+@{
+
+}
+
+
+<div id="cartItems" class="bg-gray-200 shadow rounded-lg p-6 mb-8">
+  <h2 class="text-4xl font-bold mb-4 text-center ml-6">
+    <u>Produits ajoutés au Panier</u> <span class="text-xl text-blue-500">(@ViewBag.nbr articles)</span>
+  </h2>
+  <div id="cartItems" class="bg-gray-200 shadow rounded-lg p-6 mb-8">
+    <div class="flex row w-full">
+      <!-- Section des produits dans le panier -->
+      <!-- Section des produits dans le panier -->
+      <div id="cartList" class="space-y-4" style="width: 75%;">
+        @foreach (var produit in (ViewData["Panier"] as Panier)?.CommandeProduit ?? new List<Detail>())
+        {
+          <!-- ------------ 1er produit --------- -->
+          <div class="bg-white p-4 rounded border-b-2 border-blue-400 mx-auto">
+            <div class="flex items-center justify-between space-x-4">
+              <!-- Image du produit -->
+              <div class="flex flex-row" style="width: 100%;">
+                <img src="@produit.Produit.Image" alt="Casque Bluetooth" class="w-32 h-32 object-cover rounded" />
+                <!-- Description -->
+                <div class="flex-grow ml-6">
+                  <h3 class="text-2xl font-bold text-blue-500">
+                    @produit.Produit.Libelle
+                  </h3>
+                  <p class="text-lg mt-4">Disponible : @produit.Produit.QteSock</p>
+                  <!-- Bouton Supprimer -->
+                  <button type="button" class="text-red-600 mt-5 hover:text-red-800 flex items-center space-x-1"
+                    onclick="deleteProduct(@produit.Produit.Id)">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                      stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 7l-.867 12.142A2 2 0 0116.136 21H7.864a2 2 0 01-1.997-1.858L5 7m5-4h4m-4 0a2 2 0 00-2 2v1h8V5a2 2 0 00-2-2m-4 0h4" />
+                    </svg>
+                    <span>SUPPRIMER</span>
+                  </button>
+                </div>
+              </div>
+
+              <div class="flex flex-col justify-center items-center" style="width: 25%;">
+                <!-- Prix -->
+                <div class="text-lg font-bold text-gray-800">
+                  @produit.Produit.PrixUnit FCFA
+                </div>
+                <!-- Contrôle de quantité -->
+                <div class="mt-3 mx-auto">
+                  <div class="relative flex items-center mb-2">
+                    <!-- Bouton de décrémentation -->
+                    <button type="button" id="decrement-button-@produit.Produit.Id"
+                      data-input-counter-decrement="bedrooms-input-@produit.Produit.Id"
+                      class="bg-red-500 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11"
+                      onclick="updateQuantity(@produit.Produit.Id, -1)">
+                      <svg class="w-3 h-3 text-white dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M1 1h16" />
+                      </svg>
+                    </button>
+                    <!-- Champ de quantité -->
+                    <input type="text" disabled id="bedrooms-input-@produit.Produit.Id" value="@produit.QteCommande"
+                      class="bg-gray-300 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-xl block w-1/2"
+                      onchange="updateQuantity(@produit.Produit.Id, this.value - @produit.QteCommande)" />
+                    <!-- Bouton d'incrémentation -->
+                    <button type="button" id="increment-button-@produit.Produit.Id"
+                      data-input-counter-increment="bedrooms-input-@produit.Produit.Id"
+                      class="bg-green-500 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11"
+                      onclick="updateQuantity(@produit.Produit.Id, 1)">
+                      <svg class="w-3 h-3 text-white dark:text-white" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 1v16M1 9h16" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+
+
+      <!-- Section de détail de la commande (facture) -->
+      <div class="bg-gray-900 p-4 rounded border-2 border-white mx-auto w-fit ">
+        <h2 class="text-xl font-bold text-blue-500 mb-4 text-left">Détails de la commande</h2>
+        <div id="invoiceDetails" class="space-y-4">
+          @foreach (var produit in (ViewData["Panier"] as Panier)?.CommandeProduit ?? new List<Detail>())
+          {
+            <div class="flex justify-between items-center mb-3 space-x-3">
+              <span class="text-lg font-semibold text-white">@produit.Produit.Libelle</span>
+              <span class="text-lg font-bold text-white" id="price-@produit.Produit.Id">@produit.Montant FCFA</span>
+            </div>
+          }
+        </div>
+
+        <div class="border-t-2 mt-4 pt-4 flex justify-between items-center font-bold text-blue-500">
+          <span>Total</span>
+          <span id="invoiceTotal">@ViewBag.Total CFA</span>
+        </div>
+
+        <form asp-controller="Commande" asp-action="Create" class="text-center mt-4">
+          <button type="submit"
+            class="bg-blue-500 font-bold text-base text-white px-6 py-2 rounded-lg shadow hover:bg-green-700"
+            id="finalizeOrderButton">
+            Finaliser la commande
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="~/js/panier.js"></script>

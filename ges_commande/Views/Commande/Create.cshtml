@@ -1,0 +1,75 @@
+@model ges_commande.Models.Commande
+
+@{
+}
+
+
+    <div class="bg-gray-900 px-6 py-5 mx-auto mt-14 my-5 shadow-md sm:rounded-lg" style="width: 40%;">
+        <h1 class="text-center text-3xl mb-8 font-bold text-white underline">Effectuer Commande</h1>
+
+        <form asp-action="AddProduit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="flex flex-row mt-5 justify-between items-center m-auto mb-4">
+                <div>
+                    <select
+                        class="bg-gray-50 border border-slate-800 text-slate-800 text-sm font-medium rounded-lg w-full p-2.5"
+                        name="produitId" class="form-control" asp-items="ViewBag.Produit"></select>
+                </div>
+                <div>
+                    <input name="qteVendu" type="number"
+                        class="bg-gray-50 border w-full border-gray-300 text-slate-800 text-sm rounded-lg block p-2.5"
+                        placeholder="Quantité" />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                </div>
+                <button type="submit"
+                    class="bg-blue-500 text-white font-medium rounded px-5 py-2 text-center w-1/5">Ajouter</button>
+            </div>
+            <div class="table-responsive mt-8">
+                <table class="box-shadow-black2 border-3 mx-auto text-center w-full text-slate-800 mt-16">
+                    <thead class="border-b-2 border-slate-800">
+                        <tr class="bg-white text-gray-900">
+                            <th scope="col">Article</th>
+                            <th scope="col">Quantité</th>
+                            <th scope="col">Prix Produit</th>
+                            <th scope="col">Montant</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center divide-y divide-slate-800 text-white">
+                        @foreach (var produit in (ViewData["Panier"] as Panier)?.CommandeProduit ?? new List<Detail>())
+                        {
+                            <tr>
+                                <td class="py-1">@produit.Produit.Libelle</td>
+                                <td class="py-1">@produit.QteCommande</td>
+                                <td class="py-1">@produit.Produit.PrixUnit FCFA</td>
+                                <td class="py-1">@produit.Montant FCFA</td>
+                                <td class="py-2 text-red-600">
+                                    <a class="flex row justify-center" asp-action="DeleteProduit" asp-route-produitId="@produit.Produit.Id">Delete
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="lucide lucide-trash-2 ml-3">
+                                        <path d="M3 6h18" />
+                                        <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                                        <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                                        <line x1="10" x2="10" y1="11" y2="17" />
+                                        <line x1="14" x2="14" y1="11" y2="17" /></svg></a>
+                                </td>
+                            </tr>
+                        }
+                        
+                    </tbody>
+                </table>
+                <div class="flex justify-end mt-8 ">
+                    <button class="text-xl text-white border-2 border-red-600 p-2 font-bold">Total : <span class="text-red-600 ">@ViewBag.Total FCFA</span></button>
+                </div>
+                
+            </div>
+            
+        </form>
+            <form asp-action="Create" method="post">
+                <button type="submit"
+                    class="bg-green-500 flex justify-center align-middle mx-auto text-white font-medium text-xl rounded px-8 py-2 text-center mt-8 w-1/2">Créer</button>
+            </form>
+    </div>
+

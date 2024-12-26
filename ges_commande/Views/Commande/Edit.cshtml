@@ -1,0 +1,79 @@
+@model ges_commande.Models.Commande
+
+@{
+}
+
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Edit</title>
+    </head>
+
+    <body>
+
+        <h4>Commande</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Date" class="control-label"></label>
+                        <input asp-for="Date" class="form-control" />
+                        <span asp-validation-for="Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Montant" class="control-label"></label>
+                        <input asp-for="Montant" class="form-control" />
+                        <span asp-validation-for="Montant" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsLivrer" /> @Html.DisplayNameFor(model =>
+                            model.IsLivrer)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="IsPayer" /> @Html.DisplayNameFor(model =>
+                            model.IsPayer)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Etat" class="control-label"></label>
+                        <select asp-for="Etat" class="form-control"></select>
+                        <span asp-validation-for="Etat" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ClientId" class="control-label"></label>
+                        <select asp-for="ClientId" class="form-control" asp-items="ViewBag.ClientId"></select>
+                        <span asp-validation-for="ClientId" class="text-danger"></span>
+                    </div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="CreatedAt" class="control-label"></label>
+                        <input asp-for="CreatedAt" class="form-control" />
+                        <span asp-validation-for="CreatedAt" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UpdatedAt" class="control-label"></label>
+                        <input asp-for="UpdatedAt" class="form-control" />
+                        <span asp-validation-for="UpdatedAt" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+
+    </body>
+
+</html>

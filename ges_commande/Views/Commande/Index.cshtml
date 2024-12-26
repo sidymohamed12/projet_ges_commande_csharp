@@ -1,0 +1,165 @@
+@model IEnumerable<ges_commande.Models.Commande>
+
+@{
+}
+
+<div class="relative w-full h-80 flex items-center justify-center"
+    style="background-image: url('/image/commande.png'); background-size: cover;">
+    <div class="absolute bg-blue-700 w-full h-80 flex justify-center align-items-center text-6xl font-bold text-white"
+        style="background-color: rgba(0, 0, 0, 0.5); align-items: center;">
+        Liste De Commandes
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"
+            class="flex-shrink-0 w-16 h-16 ml-6 mt-2 text-white transition duration-75 group-hover:text-gray-900">
+            <path
+                d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z" />
+            <path d="M12 22V12" />
+            <path d="m3.3 7 7.703 4.734a2 2 0 0 0 1.994 0L20.7 7" />
+            <path d="m7.5 4.27 9 5.15" />
+        </svg>
+    </div>
+
+</div>
+
+<div class="mx-auto max-w-screen-lg px-4 py-8">
+    <div class="sm:flex sm:items-center sm:justify-between flex-col sm:flex-row">
+        <div class="mt-4 sm:mt-0">
+
+            <div class="flex items-center justify-start sm:justify-end">
+                <div class="flex items-center">
+                    <label for="" class="mr-2 flex-shrink-0 text-sm font-medium text-gray-900"> filtrer par: </label>
+                    <select id="filterSelectPayer" name="IsPayer"
+                        class="sm:mr-4 block w-full whitespace-pre rounded-lg border p-1 pr-10 text-base outline-none focus:shadow sm:text-sm">
+                        <option value="" selected="@(ViewBag.IsPayer == null)">Tous</option>
+                        <option value="1" selected="@(ViewBag.IsPayer?.ToString() == "1")">Payée</option>
+                        <option value="0" selected="@(ViewBag.IsPayer?.ToString() == "0")">Impayée</option>
+                    </select>
+                </div>
+                <div class="flex items-center ml-6">
+                    <label for="" class="mr-2 flex-shrink-0 text-sm font-medium text-gray-900"> filtrer par: </label>
+                    <select id="filterSelectLivrer" name="Islivrer"
+                        class="sm:mr-4 block w-full whitespace-pre rounded-lg border p-1 pr-10 text-base outline-none focus:shadow sm:text-sm">
+                        <option value="" selected="@(ViewBag.Islivrer == null)">Tous</option>
+                        <option value="1" selected="@(ViewBag.Islivrer?.ToString() == "1")">Livrer</option>
+                        <option value="0" selected="@(ViewBag.Islivrer?.ToString() == "0")">Non-Livrer</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="rounded-lg border mt-4">
+        <div class="">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-800 text-center text-xs font-semibold uppercase tracking-widest text-white">
+                        <th class="px-5 py-3">ID</th>
+                        <th class="px-5 py-3">Date</th>
+                        <th class="px-5 py-3">Montant</th>
+                        <th class="px-5 py-3">Client</th>
+                        <th class="px-5 py-3">Payée ?</th>
+                        <th class="px-5 py-3">Etat</th>
+                        <th class="px-5 py-3">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-500 text-center">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="border-b border-gray-200 bg-white px3 py-3 text-sm">
+                                <p class="whitespace-no-wrap">@item.Id</p>
+                            </td>
+                            <td class="border-b border-gray-200 bg-white px3 py-3 text-sm">
+                                <p class="whitespace-no-wrap">@item.Date</p>
+                            </td>
+                            <td class="border-b border-gray-200 bg-white px3 py-3 text-sm">
+                                <p class="whitespace-no-wrap">@item.Montant</p>
+                            </td>
+                            <td class="border-b border-gray-200 bg-white px3 py-3 text-sm ">
+                                <div class="flex items-center justify-center">
+                                    <div class="h-10 w-10 flex-shrink-0">
+                                        <img class="h-full w-full rounded-full" src="/images/clients/yh.png" alt="" />
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="whitespace-no-wrap">@(item.Client.User.Prenom) @("-")
+                                            @(item.Client.User.Nom)</p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="border-b border-gray-200 bg-white px3 py-3 text-sm">
+                                <p class="whitespace-no-wrap">@(item.IsPayer ? "OUI" : "NON")</p>
+                            </td>
+                            <td class="border-b border-gray-200 bg-white px3 py-3 text-sm">
+                                <p class="whitespace-no-wrap">@item.Etat</p>
+                            </td>
+                            <td class="border-b border-gray-200 bg-white px3 py-3 text-sm">
+                                <a class="whitespace-no-wrap" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @* ---- *@
+
+
+        @* ---- *@
+        <!-- Pagination -->
+        <div class="flex items-center justify-center py-10 lg:px-0 sm:px-6 px-4 mt-8">
+            <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
+
+            <div class="lg:w-3/5 w-full  flex items-center justify-between mb-8">
+                
+                    <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)" asp-route-IsPayer="@ViewBag.IsPayer" asp-route-IsLivrer="@ViewBag.Islivrer"
+                        class="flex items-center pt-3 text-gray-600 cursor-pointer">
+                    @if (ViewBag.CurrentPage > 1)
+                    {
+                        <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.1665 4H12.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M1.1665 4L4.49984 7.33333" stroke="currentColor" stroke-width="1.25"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M1.1665 4.00002L4.49984 0.666687" stroke="currentColor" stroke-width="1.25"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <p class="text-2xl ml-3 font-medium leading-none ">Previous</p>
+                }
+                    </a>
+                <div class="sm:flex hidden">
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <p
+                            class="text-xl font-medium leading-none cursor-pointer text-gray-600 border-t border-transparent  pt-3 mr-4 px-2">
+                            <a asp-action="Index" asp-route-page="@i" asp-route-IsPayer="@ViewBag.IsPayer" asp-route-IsLivrer="@ViewBag.Islivrer"
+                                class="flex items-center justify-center rounded-full px-3 h-8 leading-tight border @(i == ViewBag.CurrentPage ? "z-10 text-white border-blue-300 bg-gray-900 " : "text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700")">
+                                @i
+                            </a>
+                        </p>
+                    }
+                </div>
+
+
+                <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)" asp-route-IsPayer="@ViewBag.IsPayer" asp-route-IsLivrer="@ViewBag.Islivrer"
+                    class="flex items-center pt-3 text-gray-600  cursor-pointer">
+                    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                {
+                    <p class="text-2xl font-medium leading-none mr-3">Next</p>
+                    <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.1665 4H12.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M9.5 7.33333L12.8333 4" stroke="currentColor" stroke-width="1.25"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M9.5 0.666687L12.8333 4.00002" stroke="currentColor" stroke-width="1.25"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    }
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/js/commandeIndex.js"></script>
+
+@* ---------------- *@
+
