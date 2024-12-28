@@ -245,6 +245,7 @@ C:\Users\DELL\Documents\ges_commande\ges_commande\obj\Debug\net8.0\ges_commande.
 C:\Users\DELL\Documents\ges_commande\ges_commande\obj\Debug\net8.0\ges_commande.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\DELL\Documents\ges_commande\ges_commande\obj\Debug\net8.0\ges_commande.RazorAssemblyInfo.cache
 C:\Users\DELL\Documents\ges_commande\ges_commande\obj\Debug\net8.0\ges_commande.RazorAssemblyInfo.cs
+C:\Users\DELL\Documents\ges_commande\ges_commande\obj\Debug\net8.0\ges_commande.sourcelink.json
 C:\Users\DELL\Documents\ges_commande\ges_commande\obj\Debug\net8.0\staticwebassets.build.json
 C:\Users\DELL\Documents\ges_commande\ges_commande\obj\Debug\net8.0\staticwebassets.development.json
 C:\Users\DELL\Documents\ges_commande\ges_commande\obj\Debug\net8.0\staticwebassets\msbuild.ges_commande.Microsoft.AspNetCore.StaticWebAssets.props

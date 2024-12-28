@@ -4,9 +4,11 @@ using ges_commande.Data;
 using ges_commande.Models;
 using ges_commande.Services;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ges_commande.Controllers
 {
+    [Authorize(Roles = "RS, Client")]
     public class ProduitController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -30,7 +32,7 @@ namespace ges_commande.Controllers
             return View(produits);
         }
 
-        // GET: Produit/Details/5
+        // GET: Produit/Details/id
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -54,9 +56,6 @@ namespace ges_commande.Controllers
             return View();
         }
 
-        // POST: Produit/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Produit produit)
@@ -74,7 +73,7 @@ namespace ges_commande.Controllers
                     produit.ImageFile.CopyTo(stream);
                 }
 
-                produit.Image = $"/image/{produit.ImageFile.FileName}";
+                produit.Image = $"/image/produits/{produit.ImageFile.FileName}";
             }
 
             if (ModelState.IsValid)
@@ -86,7 +85,7 @@ namespace ges_commande.Controllers
             return View(produit);
         }
 
-        // GET: Produit/Edit/5
+        // GET: Produit/Edit/id
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -103,9 +102,6 @@ namespace ges_commande.Controllers
             return View(produit);
         }
 
-        // POST: Produit/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Produit produit)
@@ -199,7 +195,6 @@ namespace ges_commande.Controllers
 
             HttpContext.Session.SetObjectAsJson("Panier", panier);
 
-            // Retourner les nouvelles informations
             return Json(new { success = true, newMontant = produit.Montant, total = total });
         }
 
@@ -210,3 +205,4 @@ namespace ges_commande.Controllers
         }
     }
 }
+

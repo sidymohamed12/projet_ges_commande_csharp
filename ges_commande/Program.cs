@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql("Host=localhost;Database=ges_commande_csharp;Username=postgres;Password=SMS;Port=5432"));
 
@@ -13,6 +15,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IProduitService, ProduitService>();
 builder.Services.AddScoped<ICommandeService, CommandeService>();
 builder.Services.AddScoped<IPayementService, PayementService>();
+builder.Services.AddScoped<ILivraisonService, LivraisonService>();
+builder.Services.AddScoped<IClientService, ClientService>();
 
 builder.Services.AddControllersWithViews();
 // Add services to the container.

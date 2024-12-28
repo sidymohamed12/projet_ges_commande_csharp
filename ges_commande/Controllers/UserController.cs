@@ -29,7 +29,7 @@ namespace ges_commande.Controllers
             return View(await _context.Users.ToListAsync());
         }
 
-        // GET: User/Details/5
+        // GET: User/Details/id
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -53,9 +53,7 @@ namespace ges_commande.Controllers
             return View();
         }
 
-        // POST: User/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Login,Password,Role,Nom,Prenom,Telephone,Id,CreatedAt,UpdatedAt")] User user)
@@ -69,7 +67,7 @@ namespace ges_commande.Controllers
             return View(user);
         }
 
-        // GET: User/Edit/5
+        // GET: User/Edit/id
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,9 +83,7 @@ namespace ges_commande.Controllers
             return View(user);
         }
 
-        // POST: User/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Login,Password,Role,Nom,Prenom,Telephone,Id,CreatedAt,UpdatedAt")] User user)
@@ -120,7 +116,7 @@ namespace ges_commande.Controllers
             return View(user);
         }
 
-        // GET: User/Delete/5
+        // GET: User/Delete/id
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,7 +134,7 @@ namespace ges_commande.Controllers
             return View(user);
         }
 
-        // POST: User/Delete/5
+        // POST: User/Delete/id
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

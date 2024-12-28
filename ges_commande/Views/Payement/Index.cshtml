@@ -1,0 +1,98 @@
+@model IEnumerable<ges_commande.Models.Payement>
+
+@{
+}
+
+<div class="mx-auto max-w-screen-lg px-4 py-8">
+
+    <div class="rounded-lg border mt-4">
+        <div class="">
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-800 text-left text-xs font-semibold uppercase tracking-widest text-white">
+                        <th class="px-5 py-3">ID</th>
+                        <th class="px-5 py-3">Date</th>
+                        <th class="px-5 py-3">Mode de Payement</th>
+                        <th class="px-5 py-3">Montant</th>
+                        <th class="px-5 py-3">Details Commande</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-500">
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                <p class="whitespace-no-wrap">@item.Id</p>
+                            </td>
+                            <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                <p class="whitespace-no-wrap">@(item.Date)</p>
+                            </td>
+                            <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                <p class="whitespace-no-wrap">@(item.Type)</p>
+                            </td>
+                            <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                <p class="whitespace-no-wrap">@(item.Montant)</p>
+                            </td>
+                            <td class="border-b border-gray-200 bg-white px-5 py-5 text-sm">
+                                <a class="whitespace-no-wrap" asp-controller="Commande" asp-action="Details"
+                                    asp-route-id="@item.Commande.Id">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination -->
+        <div class="flex items-center justify-center py-10 lg:px-0 sm:px-6 px-4 mt-8">
+            <!--- more free and premium Tailwind CSS components at https://tailwinduikit.com/ --->
+
+            <div class="lg:w-3/5 w-full  flex items-center justify-between border-t border-gray-200">
+
+                <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage - 1)"
+                    class="flex items-center pt-3 text-gray-600  cursor-pointer">
+                    @if (ViewBag.CurrentPage > 1)
+                    {
+                        <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.1665 4H12.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M1.1665 4L4.49984 7.33333" stroke="currentColor" stroke-width="1.25"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M1.1665 4.00002L4.49984 0.666687" stroke="currentColor" stroke-width="1.25"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <p class="text-2xl ml-3 font-medium leading-none ">Previous</p>
+                    }
+                </a>
+                <div class="sm:flex hidden">
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <p
+                            class="text-xl font-medium leading-none cursor-pointer text-gray-600  border-t border-transparent  pt-3 mr-4 px-2">
+                            <a asp-action="Index" asp-route-page="@i"
+                                class="flex items-center justify-center rounded-full px-3 h-8 leading-tight border @(i == ViewBag.CurrentPage ? "z-10 text-white border-blue-300 bg-gray-900 " : "text-gray-500 bg-white border-gray-300 hover:bg-gray-100 hover:text-gray-700")">
+                                @i
+                            </a>
+                        </p>
+                    }
+                </div>
+
+
+                <a asp-action="Index" asp-route-page="@(ViewBag.CurrentPage + 1)"
+                    class="flex items-center pt-3 text-gray-600  cursor-pointer">
+                    @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+                    {
+                        <p class="text-2xl font-medium leading-none mr-3">Next</p>
+                        <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1.1665 4H12.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M9.5 7.33333L12.8333 4" stroke="currentColor" stroke-width="1.25"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M9.5 0.666687L12.8333 4.00002" stroke="currentColor" stroke-width="1.25"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    }
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

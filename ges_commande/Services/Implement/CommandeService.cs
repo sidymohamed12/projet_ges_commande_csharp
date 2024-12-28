@@ -92,9 +92,16 @@ namespace ges_commande.Services.Implement
             return await result.OrderBy(p => p.Id).ToListAsync();
         }
 
-        public async Task<int> GetCountCommande()
+        public async Task<int> GetCountCommande(string? login = null, string? role = null)
         {
-            return await context.Commandes.CountAsync();
+            var commandes = context.Commandes
+                    .AsQueryable();
+
+            if (role == "Client")
+            {
+                commandes = FilterClientConnecter(commandes, login);
+            }
+            return await commandes.CountAsync();
         }
     }
 }

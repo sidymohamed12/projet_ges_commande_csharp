@@ -21,10 +21,15 @@ namespace ges_commande.Controllers
             this.payementService = payementService;
         }
 
+        public async Task<IActionResult> Index(int page = 1, int limit = 10)
+        {
+            var payements = await payementService.GetAllPayementPagination(page, limit);
+            int totalPayements = await payementService.GetCountPayement();
+            ViewBag.TotalPages = (int)Math.Ceiling(totalPayements / (double)limit);
+            ViewBag.CurrentPage = page;
+            return View(payements);
+        }
 
-        // POST: Payement/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(string typePayement, string RefPayement, string commandeId)

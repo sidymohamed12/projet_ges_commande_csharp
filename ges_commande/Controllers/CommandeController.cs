@@ -30,14 +30,14 @@ namespace ges_commande.Controllers
             ViewBag.IsPayer = IsPayer;
             ViewBag.Islivrer = IsLivrer;
 
-            int totalCommande = await commandeService.GetCountCommande();
+            int totalCommande = await commandeService.GetCountCommande(login, userRole);
             ViewBag.TotalPages = (int)Math.Ceiling(totalCommande / (double)limit);
             ViewBag.CurrentPage = page;
 
             return View(commandes);
         }
 
-        // GET: Commande/Details/5
+        // GET: Commande/Details/id
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -77,9 +77,7 @@ namespace ges_commande.Controllers
             return View();
         }
 
-        // POST: Commande/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Commande commande)
@@ -127,7 +125,7 @@ namespace ges_commande.Controllers
             return View(commande);
         }
 
-        // GET: Commande/Edit/5
+        // GET: Commande/Edit/id
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -145,9 +143,7 @@ namespace ges_commande.Controllers
             return View(commande);
         }
 
-        // POST: Commande/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Date,Montant,IsLivrer,IsPayer,Etat,LivreurId,ClientId,Id,CreatedAt,UpdatedAt")] Commande commande)
@@ -182,7 +178,7 @@ namespace ges_commande.Controllers
             return View(commande);
         }
 
-        // GET: Commande/Delete/5
+        // GET: Commande/Delete/id
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -201,7 +197,7 @@ namespace ges_commande.Controllers
             return View(commande);
         }
 
-        // POST: Commande/Delete/5
+        // POST: Commande/Delete/id
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

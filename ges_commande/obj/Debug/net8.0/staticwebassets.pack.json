@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\css\\form.css"
     },
     {
+      "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\css\\home.css",
+      "PackagePath": "staticwebassets\\css\\home.css"
+    },
+    {
       "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\css\\output.css",
       "PackagePath": "staticwebassets\\css\\output.css"
     },
@@ -37,12 +41,36 @@
       "PackagePath": "staticwebassets\\image\\BG.png"
     },
     {
+      "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\image\\banners\\banner.png",
+      "PackagePath": "staticwebassets\\image\\banners\\banner.png"
+    },
+    {
+      "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\image\\banners\\banner2.jpg",
+      "PackagePath": "staticwebassets\\image\\banners\\banner2.jpg"
+    },
+    {
+      "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\image\\banners\\banner3.jpg",
+      "PackagePath": "staticwebassets\\image\\banners\\banner3.jpg"
+    },
+    {
+      "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\image\\banners\\banner4.jpg",
+      "PackagePath": "staticwebassets\\image\\banners\\banner4.jpg"
+    },
+    {
+      "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\image\\banners\\banner5.jpg",
+      "PackagePath": "staticwebassets\\image\\banners\\banner5.jpg"
+    },
+    {
       "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\image\\bb.png",
       "PackagePath": "staticwebassets\\image\\bb.png"
     },
     {
       "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\image\\commande.png",
       "PackagePath": "staticwebassets\\image\\commande.png"
+    },
+    {
+      "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\image\\loggo.png",
+      "PackagePath": "staticwebassets\\image\\loggo.png"
     },
     {
       "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\image\\payementType\\cheque.png",
@@ -103,6 +131,10 @@
     {
       "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\image\\produits\\produit.jpg",
       "PackagePath": "staticwebassets\\image\\produits\\produit.jpg"
+    },
+    {
+      "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\image\\produits\\un logo pour un site de vente e-commerce daccessoire football avec les initiales SMS12 en noir et bleu.png",
+      "PackagePath": "staticwebassets\\image\\produits\\un logo pour un site de vente e-commerce daccessoire football avec les initiales SMS12 en noir et bleu.png"
     },
     {
       "Id": "C:\\Users\\DELL\\Documents\\ges_commande\\ges_commande\\wwwroot\\js\\commandeIndex.js",
